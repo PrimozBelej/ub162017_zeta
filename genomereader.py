@@ -10,6 +10,7 @@ Attributes:
 """
 
 from Bio import SeqIO
+from Bio.Seq import translate, reverse_complement
 
 
 INT_FIELDS = {0, 4, 5, 6, 7, 8, 16}
@@ -113,3 +114,22 @@ class GenomeReader:
 
         if exon >= 0 and exon < gene['exonCount']:
             return str(self.genome)[exons_pos[exon][0]:exons_pos[exon][1]]
+
+    def join_exons(self, name):
+        """ Joins all exons of a given gene"""
+        list_of_exons = self.exons_seq(name)
+        r = ""
+        for e in list_of_exons:
+            r = r + e
+        return r
+
+    def get_amino_acid_sequence(self, name):
+        """return aminoacid sequence of a given gene"""
+        for g in self.genes:
+            if g["name"] == name:
+                if g["strand"] == "+":
+                    return translate(self.join_exons(name), stop_symbol="")
+                else: #negative strand
+                    # TODO: check if for negative strand really reverse complement ?
+                    return translate(reverse_complement(self.join_exons(name)), stop_symbol="")
+
