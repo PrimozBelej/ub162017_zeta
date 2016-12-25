@@ -1,5 +1,8 @@
 import genomereader
 import align
+import dendrogram
+from matplotlib import pyplot as plt
+
 
 # read genomes
 genome_pb2 = genomereader.GenomeReader(
@@ -18,18 +21,17 @@ genome_rem3 = genomereader.GenomeReader(
 # all genomes have the same genes
 all_gene_names = [g["name"] for g in genome_pb2.genes]
 
-a = align.Align("blosum62.txt", 5)
+a = align.Align("PAM250.txt", 5)
 
 #sum of scores of global alignments of nucleotids over all genes with
-#  blosum62 scoring matrix
-#  and linear gap penalty 5
+# linear gap penalty 5
 
 rem_jap_nucleotid_seq_pam = 0
 pb_jap_nucleotid_seq_pam = 0
 rem_pb_nucleotid_seq_pam = 0
 
 #sum of scores of alignments of aminoacid sequnces over all genes with
-#  blosum62 scoring matrix
+#  pam250 scoring matrix
 #  and linear gap penalty 5
 
 rem_jap_aminoacid_seq_pam = 0
@@ -46,7 +48,7 @@ for gene in all_gene_names:
     rem_jap_nucleotid_seq_pam += a.global_alignment(s1, u1)[0]
     pb_jap_nucleotid_seq_pam += a.global_alignment(u1, t1)[0]
 
-#################################################################
+    #################################################################
     s2 = genome_rem3.get_amino_acid_sequence(gene)
     t2 = genome_pb2.get_amino_acid_sequence(gene)
     u2 = genome_jap1.get_amino_acid_sequence(gene)
@@ -63,3 +65,14 @@ print("Results when comparing aminoacid sequence")
 print(rem_jap_aminoacid_seq_pam)
 print(pb_jap_aminoacid_seq_pam)
 print(rem_pb_aminoacid_seq_pam)
+
+
+dend = dendrogram.Dendrograms(1, 2)
+# 1row, 2 columns for 2 dendrograms
+
+d1 = [rem_jap_nucleotid_seq_pam, pb_jap_nucleotid_seq_pam, rem_pb_nucleotid_seq_pam]
+dend.draw_dendrogram(d1, "nucleotids")
+d2 = [rem_jap_aminoacid_seq_pam, pb_jap_aminoacid_seq_pam, rem_pb_aminoacid_seq_pam]
+dend.draw_dendrogram(d2, "amino-acid")
+
+plt.show()
