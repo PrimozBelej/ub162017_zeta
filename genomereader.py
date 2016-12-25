@@ -121,7 +121,15 @@ class GenomeReader:
         r = ""
         for e in list_of_exons:
             r = r + e
-        return r
+        for g in self.genes:
+            if g["name"] == name:
+                if g["strand"] == "+":
+                    #lower - case letters are mapped into upper case
+                    # (Source: wikipedia - FASTA_format)
+                    return r.upper()
+                else:
+                    return reverse_complement(r).upper()
+
 
     def get_amino_acid_sequence(self, name):
         """return aminoacid sequence of a given gene"""
@@ -130,6 +138,6 @@ class GenomeReader:
                 if g["strand"] == "+":
                     return translate(self.join_exons(name), stop_symbol="")
                 else: #negative strand
-                    # TODO: check if for negative strand really reverse complement ?
+                    # for negative strand we take reverse complement
                     return translate(reverse_complement(self.join_exons(name)), stop_symbol="")
 
