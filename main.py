@@ -1,5 +1,5 @@
 import genomereader
-import globalalignment
+import align
 
 # read genomes
 genome_pb2 = genomereader.GenomeReader(
@@ -18,37 +18,48 @@ genome_rem3 = genomereader.GenomeReader(
 # all genomes have the same genes
 all_gene_names = [g["name"] for g in genome_pb2.genes]
 
-global_align = globalalignment.GlobalAlignment("blosum62.txt", 5)
-# sum of scores over all genes
-rem_jap = 0
-pb_jap = 0
-rem_pb = 0
+a = align.Align("blosum62.txt", 5)
+
+#sum of scores of global alignments of nucleotids over all genes with
+#  blosum62 scoring matrix
+#  and linear gap penalty 5
+
+rem_jap_nucleotid_seq_pam = 0
+pb_jap_nucleotid_seq_pam = 0
+rem_pb_nucleotid_seq_pam = 0
+
+#sum of scores of alignments of aminoacid sequnces over all genes with
+#  blosum62 scoring matrix
+#  and linear gap penalty 5
+
+rem_jap_aminoacid_seq_pam = 0
+pb_jap_aminoacid_seq_pam = 0
+rem_pb_aminoacid_seq_pam = 0
 
 for gene in all_gene_names:
 
-    # ALERT!
-    # small letters are treated the same as the one in caps
-    # small letters denote repetitions, but this should be checked!
-    s = genome_rem3.join_exons(gene).upper()
-    t = genome_pb2.join_exons(gene).upper()
-    u = genome_jap1.join_exons(gene).upper()
+    s1 = genome_rem3.join_exons(gene)
+    t1 = genome_pb2.join_exons(gene)
+    u1 = genome_jap1.join_exons(gene)
 
-    m = len(t)
-    n = len(s)
-    o = len(u)
+    rem_pb_nucleotid_seq_pam += a.global_alignment(s1, t1)[0]
+    rem_jap_nucleotid_seq_pam += a.global_alignment(s1, u1)[0]
+    pb_jap_nucleotid_seq_pam += a.global_alignment(u1, t1)[0]
 
-    M = global_align.dynamic_table(s, t)
-    rem_pb += M[(m - 1, n - 1)]
+#################################################################
+    s2 = genome_rem3.get_amino_acid_sequence(gene)
+    t2 = genome_pb2.get_amino_acid_sequence(gene)
+    u2 = genome_jap1.get_amino_acid_sequence(gene)
 
-    M = global_align.dynamic_table(u, s)
-    rem_jap += M[n - 1, o - 1]
+    rem_pb_aminoacid_seq_pam += a.global_alignment(s2, t2)[0]
+    rem_jap_aminoacid_seq_pam += a.global_alignment(s2, u2)[0]
+    pb_jap_aminoacid_seq_pam += a.global_alignment(u2, t2)[0]
 
-    M = global_align.dynamic_table(u, t)
-    pb_jap += M[m - 1, o - 1]
-
-print(rem_jap)
-print(pb_jap)
-print(rem_pb)
-
-
-
+print("Results when comparing nucleotid sequence")
+print(rem_jap_nucleotid_seq_pam)
+print(pb_jap_nucleotid_seq_pam)
+print(rem_pb_nucleotid_seq_pam)
+print("Results when comparing aminoacid sequence")
+print(rem_jap_aminoacid_seq_pam)
+print(pb_jap_aminoacid_seq_pam)
+print(rem_pb_aminoacid_seq_pam)
