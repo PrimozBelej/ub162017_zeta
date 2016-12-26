@@ -21,7 +21,7 @@ genome_rem3 = genomereader.GenomeReader(
 # all genomes have the same genes
 all_gene_names = [g["name"] for g in genome_pb2.genes]
 
-a = align.Align("PAM250.txt", 5)
+a = align.Align("pam250", 5)  # eg. blosum62, pam250, pam30, rao ... or PAM250.txt (directly from file)
 
 #sum of scores of global alignments of nucleotids over all genes with
 # linear gap penalty 5

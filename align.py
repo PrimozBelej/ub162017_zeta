@@ -1,21 +1,30 @@
+from Bio.SubsMat import MatrixInfo
+
 def read_scoring_matrix(ime):
-    """Loads scoring matrix from given path/name of the file.
+    """Loads scoring matrix from given name from Biopython MatrixInfo or from given path to file.
     Args:
-        ime (str): Path to a file with scoring matrix.
+        ime (str): Name of BioPythons MatrixInfo variable or name to a file with scoring matrix (eg. *.txt).
     Returns:
         dict: Dictionary scoring matrix.
     """
     scoring_matrix = {}
-    with open(ime) as f:
-        stolpci = f.readline().strip().split()
-        for line in f:
-            prvi, *vrstica = line.strip().split()
-            for i, vrednost in enumerate(vrstica):
-                scoring_matrix[(prvi, stolpci[i])] = int(vrednost)
+
+    try:
+        scoring_matrix_temp = getattr(MatrixInfo, ime)  # use built in matrix if exists
+        for key1, key2 in scoring_matrix_temp:  # biopython built in matrices are not symmetric -.-
+            scoring_matrix[(key1, key2)] = scoring_matrix_temp[(key1, key2)]
+            scoring_matrix[(key2, key1)] = scoring_matrix_temp[(key1, key2)]
+    except AttributeError:  # else load from file
+        with open(ime) as f:
+            stolpci = f.readline().strip().split()
+            for line in f:
+                prvi, *vrstica = line.strip().split()
+                for i, vrednost in enumerate(vrstica):
+                    scoring_matrix[(prvi, stolpci[i])] = int(vrednost)
     return scoring_matrix
 
-class Align:
 
+class Align:
     def __init__(self, scoring_matrix, linear_gap_penalty):
 
         self.sm = read_scoring_matrix(scoring_matrix)
