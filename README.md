@@ -17,10 +17,30 @@ Provides reading and parsing of the dataset. In addition to loading a whole geno
 
 #### alignment.py
 
-Accepts two strings and scores their alignment. Return score and alignment of strings. Both local and global alignment are supported.  
+Accepts two strings and scores their alignment. Return score and alignment of strings. Local, global and multiple alignment are supported.  
 
 #### dendrogram.py
 
 Visualization of differences between alignment of all genes between species. 
 
 ### Experiments and results
+
+In the folowing section we present the experiments and their results. We test our implementation of gene alignment with different scoring matrices, with junk DNA and without etc. 
+
+#### Global alignment of exons with different scoring matrices
+
+In the first experiment we perform global alignment on species pair by pair. For each two genes we extract exons and perform alignment on them. The sum of score is our metric to compare alignments of species pair by pair. After alignment using nucleotides we also experiment with aminoacid sequence. 
+
+The resulting dendrogram is shown below:
+
+![alt tag](http://shrani.si/f/2G/RH/454B7FSx/1/dendrogramglobal.png)
+
+As we can see better results were obtained using nucleotides (note that scores were inverted into distances - higher score translate into lower distance). From dendrogram we can also conclude that remanei and japonica have higher similarity compared to brenner, no matter which sequence type was used. 
+
+| Species pair | Nucleotide | Amino-acid |
+|--------------|------------|------------|
+| rem_jap      | 13848      | -2736      |
+| pb_jap       | 9112       | -4108      |
+| rem_pb       | 12144      | -3562      |
+
+As we see from table above, the scores obtained using amino acid sequences are significantly lower. 
