@@ -1,4 +1,8 @@
 from Bio.SubsMat import MatrixInfo
+from itertools import product
+from itertools import combinations
+from operator import sub
+import numpy as np
 
 def read_scoring_matrix(ime):
     """Loads scoring matrix from given name from Biopython MatrixInfo or from given path to file.
@@ -124,6 +128,51 @@ class Align:
                 s1.append(next(s))
         return M[(m - 1, n - 1)], "".join(s1), "".join(t1)
 
+    def kazen(self, sez, indeksi, komb):
+        """Punishment - auxiliary function for multiple alignment"""
+        return sum(1 if not ((i * j == 1 and niz1[ind1] == niz2[ind2]) or (i == 0 and j == 0)) else 0 for
+                   (niz1, ind1, i), (niz2, ind2, j) in combinations(zip(sez, indeksi, komb), 2))
+
+    def dinamicna_tabela_multiple(self, sez):
+        M = {}
+        M[tuple(np.repeat(-1, len(sez)))] = 0  # zgornji levi kot tabele
+        P = {}
+
+        indexes = [tuple(np.subtract(dxs, np.ones(len(sez), dtype="int"))) for dxs in
+                   list(np.ndindex(tuple(len(i) + 1 for i in sez)))]
+
+        for index in indexes:
+            if index != tuple(np.repeat(-1, len(sez))):
+                kombinacije = product([0, 1], repeat=len(sez))
+                next(kombinacije)  # same nicle izpustimo
+                # ce kljuca ni, vzamemo zelo majhno vrednost (-100000), ki nima vpliva, saj iscemo max
+                M[index], P[index] = max((M.get(tuple(map(sub, index, komb)), -100000) - self.kazen(sez, index, komb),
+                                          tuple(map(sub, index, komb))) for komb in kombinacije)
+
+        return M, P
+
+    def trace_back_multiple(self, sez):
+        M, P = self.dinamicna_tabela_multiple(sez)
+
+        el = tuple(len(s) - 1 for s in sez)
+        iters = [iter(s) for s in sez]
+        pot = []
+        while True:
+            pot.append(el)
+            if el == tuple(np.repeat(-1, len(sez))):
+                break
+            el = P[el]
+        pot = list(reversed(pot))
+        words = [[] for i in range(len(sez))]
+        for i in range(len(pot) - 1):
+            prvi = pot[i]
+            drugi = pot[i + 1]
+            for i in range(len(sez)):
+                if prvi[i] == drugi[i]:
+                    words[i].append("-")
+                else:
+                    words[i].append(next(iters[i]))
+        return M[tuple(len(s)-1 for s in sez)], ["".join(s) for s in words]
 
     def global_alignment(self, s, t):
         """global alignment of strings s and t,
@@ -137,3 +186,11 @@ class Align:
         d, s1, t1 = self.trace_back_local(s, t)
         return d, s1, t1
 
+    def multiple_alignment(self, sez):
+        """multiple alignment of all strings in array sez
+        returns score and array of aligned substrings
+
+        NOTE: IT IS NOT EFFICIENT and can take a lot of time
+        """
+        d, words = self.trace_back_multiple(sez)
+        return d, words
