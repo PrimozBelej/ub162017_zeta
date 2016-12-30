@@ -11,4 +11,16 @@ The dataset consist of genome of 3 different nematodes (round worms) - japanica,
 
 ### Methods
 
+#### genomereader.py
+
+Provides reading and parsing of the dataset. In addition to loading a whole genome we can access individual gene. Furthermore we can access one or all exons belonging to gene. For instructions and usage examples see [wiki](https://github.com/PrimozBelej/ub162017_zeta/wiki/Uporaba-modula-genomereader.py)
+
+#### alignment.py
+
+Accepts two strings and scores their alignment. Return score and alignment of strings. Both local and global alignment are supported.  
+
+#### dendrogram.py
+
+Visualization of differences between alignment of all genes between species. 
+
 ### Experiments and results
