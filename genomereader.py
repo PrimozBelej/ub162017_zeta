@@ -11,11 +11,17 @@ Attributes:
 
 from Bio import SeqIO
 from Bio.Seq import translate, reverse_complement
-
+import gzip
 
 INT_FIELDS = {0, 4, 5, 6, 7, 8, 16}
 INT_LIST_FIELDS = {9, 10, 15}
 
+def load_compress_genome (path):
+    """Loads genome data from compressed fasta file."""
+    with gzip.open(path, 'rb') as f:
+        f.readline()
+        data = f.read().decode("utf-8").replace("\n", "")
+    return data
 
 class GenomeReader:
     """Provides parsing and storing of genomes and gene annotations.
@@ -41,7 +47,10 @@ class GenomeReader:
         Args:
             path (str): Path to an uncompressed fasta file.
         """
-        self.genome = SeqIO.read(path, 'fasta').seq
+        if path[-2:] == 'gz':
+            self.genome = load_compress_genome(path)
+        else:
+            self.genome = SeqIO.read(path, 'fasta').seq
 
     def load_genes(self, path):
         """Loads gene annotation data from a csv file.
