@@ -125,9 +125,8 @@ class GenomeReader:
     def join_exons(self, name):
         """ Joins all exons of a given gene"""
         list_of_exons = self.exons_seq(name)
-        r = ""
-        for e in list_of_exons:
-            r = r + e
+        
+        r = "".join(list_of_exons)
             
         if self.genes[name]["strand"] == "+":
             #lower - case letters are mapped into upper case
