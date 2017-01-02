@@ -6,20 +6,20 @@ from matplotlib import pyplot as plt
 
 # read genomes
 genome_pb2 = genomereader.GenomeReader(
-    '../../chC_alignment/chC_alignment_nematode/data/genome/caePb2/chrUn.fa',
+    '../../chC_alignment/chC_alignment_nematode/data/genome/caePb2/chrUn.fa.gz',
     '../../chC_alignment/chC_alignment_nematode/data/genes/caePb2.augustusGene.txt')
 
 genome_jap1 = genomereader.GenomeReader(
-    '../../chC_alignment/chC_alignment_nematode/data/genome/caeJap1/chrUn.fa',
+    '../../chC_alignment/chC_alignment_nematode/data/genome/caeJap1/chrUn.fa.gz',
     '../../chC_alignment/chC_alignment_nematode/data/genes/caeJap1.augustusGene.txt')
 
 
 genome_rem3 = genomereader.GenomeReader(
-    '../../chC_alignment/chC_alignment_nematode/data/genome/caeRem3/chrUn.fa',
+    '../../chC_alignment/chC_alignment_nematode/data/genome/caeRem3/chrUn.fa.gz',
     '../../chC_alignment/chC_alignment_nematode/data/genes/caeRem3.augustusGene.txt')
 
 # all genomes have the same genes
-all_gene_names = [g["name"] for g in genome_pb2.genes]
+all_gene_names = genome_pb2.genes.keys()
 
 a = align.Align("pam250", 5)  # eg. blosum62, pam250, pam30, rao ... or PAM250.txt (directly from file)
 
