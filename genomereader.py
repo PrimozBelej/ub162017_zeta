@@ -58,7 +58,7 @@ class GenomeReader:
         Args:
             path (str): Path to an uncompressed fasta file.
         """
-        self.genes = []
+        self.genes = {}
         with open(path, 'r') as in_file:
             labels = in_file.readline().strip().split()
             for row in in_file:
@@ -68,7 +68,8 @@ class GenomeReader:
                         values[i] = int(v)
                     elif i in INT_LIST_FIELDS:
                         values[i] = [int(n) for n in v.strip().split(',')[:-1]]
-                self.genes.append(dict(zip(labels, values)))
+
+                self.genes[values[1]] = dict(zip(labels, values))
 
     def gene_by_name(self, name):
         """Finds and returns gene anotation with a given name.
@@ -80,10 +81,7 @@ class GenomeReader:
             str: Dictionary with gene annotations. If gene with a
                 given name is not found the returned value is None.
         """
-        for g in self.genes:
-            if g['name'] == name:
-                return g
-        return None
+        return self.genes[name]
 
     def gene_seq(self, name):
         """Returns sequence of a specified gene.
@@ -130,23 +128,22 @@ class GenomeReader:
         r = ""
         for e in list_of_exons:
             r = r + e
-        for g in self.genes:
-            if g["name"] == name:
-                if g["strand"] == "+":
-                    #lower - case letters are mapped into upper case
-                    # (Source: wikipedia - FASTA_format)
-                    return r.upper()
-                else:
-                    return reverse_complement(r).upper()
+            
+        if self.genes[name]["strand"] == "+":
+            #lower - case letters are mapped into upper case
+            # (Source: wikipedia - FASTA_format)
+            return r.upper()
+        else:
+            return reverse_complement(r).upper()
 
 
     def get_amino_acid_sequence(self, name):
         """return aminoacid sequence of a given gene"""
-        for g in self.genes:
-            if g["name"] == name:
-                if g["strand"] == "+":
-                    return translate(self.join_exons(name), stop_symbol="")
-                else: #negative strand
-                    # for negative strand we take reverse complement
-                    return translate(reverse_complement(self.join_exons(name)), stop_symbol="")
+        
+        if self.genes[name]["strand"] == "+":
+            return translate(self.join_exons(name), stop_symbol="")
+        else: #negative strand
+            # for negative strand we take reverse complement
+            return translate(reverse_complement(self.join_exons(name)), stop_symbol="")
+
 
