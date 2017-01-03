@@ -44,3 +44,21 @@ As we can see better results were obtained using nucleotides (note that scores w
 | rem_pb       | 12144      | -3562      |
 
 As we see from table above, the scores obtained using amino acid sequences are significantly lower. 
+
+#### Global alignment if introns are included.
+
+In this experiment we perform global alignment on species pair by pair. For each two genes we take a whole sequance and perform alignment on them. The sum of score is our metric to compare alignments of species pair by pair. After alignment using nucleotides we also experiment with aminoacid sequence. 
+
+The resulting dendrogram is shown below:
+
+![alt tag]( http://shrani.si/f/2H/bp/2sudstxP/with-itron.png)
+
+We can see results are different as in the first experiment. Now remanei and brenneri have higher similarity compared to japonica, no matter which sequence type was used. And also distances between them are slightly larger. 
+
+| Species pair | Nucleotide | Amino-acid |
+|--------------|------------|------------|
+| rem_jap      | 14249     | -3584  |
+| pb_jap       | 13593      | -3812     |
+| rem_pb       | 20000      | -2548  |
+
+As in the first experiment, the scores obtained using amino acid sequences are significantly lower.
