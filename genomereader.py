@@ -144,5 +144,21 @@ class GenomeReader:
         else: #negative strand
             # for negative strand we take reverse complement
             return translate(reverse_complement(self.join_exons(name)), stop_symbol="")
+        
+    def gene_with_itron(self, name):
+        """ Joins  exons with itron of a given gene"""
+        r = self.gene_seq(name)
+        if self.genes[name]["strand"] == "+":
+            #lower - case letters are mapped into upper case
+            # (Source: wikipedia - FASTA_format)
+            return r.upper()
+        else:
+            return reverse_complement(r).upper()
 
-
+    def get_amino_acid_sequence_with_itron(self, name):
+        """return aminoacid sequence of a given gene"""
+        if self.genes[name]["strand"] == "+":
+            return translate(self.gene_seq(name), stop_symbol="")
+        else:  # negative strand
+            # for negative strand we take reverse complement
+            return translate(reverse_complement(self.gene_seq(name)), stop_symbol="")
