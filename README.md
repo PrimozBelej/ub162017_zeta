@@ -51,7 +51,7 @@ In this experiment we perform global alignment on species pair by pair. For each
 
 The resulting dendrogram is shown below:
 
-![alt tag]( http://shrani.si/f/2H/bp/2sudstxP/with-itron.png)
+![alt tag]( http://shrani.si/f/3s/d8/1mWNyeFt/with-itron.png)
 
 We can see results are different as in the first experiment. Now remanei and brenneri have higher similarity compared to japonica, no matter which sequence type was used. And also distances between them are slightly larger. 
 
