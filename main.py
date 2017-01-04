@@ -6,23 +6,16 @@ from sort_print import sort_print
 
 # read genomes
 genome_pb2 = genomereader.GenomeReader(
-    #'../../chC_alignment/chC_alignment_nematode/data/genome/caePb2/chrUn.fa.gz',
-    #'../../chC_alignment/chC_alignment_nematode/data/genes/caePb2.augustusGene.txt')
-    'D:/chC_alignment_nematode/data/genome/caePb2/chrUn.fa.gz',
-    'D:/chC_alignment_nematode/data/genes/caePb2.augustusGene.txt')
+    '../../chC_alignment/chC_alignment_nematode/data/genome/caePb2/chrUn.fa.gz',
+    '../../chC_alignment/chC_alignment_nematode/data/genes/caePb2.augustusGene.txt')
 
 genome_jap1 = genomereader.GenomeReader(
-    #'../../chC_alignment/chC_alignment_nematode/data/genome/caeJap1/chrUn.fa.gz',
-    #'../../chC_alignment/chC_alignment_nematode/data/genes/caeJap1.augustusGene.txt')
-    'D:/chC_alignment_nematode/data/genome/caeJap1/chrUn.fa.gz',
-    'D:/chC_alignment_nematode/data/genes/caeJap1.augustusGene.txt')
-
+    '../../chC_alignment/chC_alignment_nematode/data/genome/caeJap1/chrUn.fa.gz',
+    '../../chC_alignment/chC_alignment_nematode/data/genes/caeJap1.augustusGene.txt')
 
 genome_rem3 = genomereader.GenomeReader(
-    #'../../chC_alignment/chC_alignment_nematode/data/genome/caeRem3/chrUn.fa.gz',
-    #'../../chC_alignment/chC_alignment_nematode/data/genes/caeRem3.augustusGene.txt')
-    'D:/chC_alignment_nematode/data/genome/caeRem3/chrUn.fa.gz',
-    'D:/chC_alignment_nematode/data/genes/caeRem3.augustusGene.txt')
+    '../../chC_alignment/chC_alignment_nematode/data/genome/caeRem3/chrUn.fa.gz',
+    '../../chC_alignment/chC_alignment_nematode/data/genes/caeRem3.augustusGene.txt')
 
 # all genomes have the same genes
 all_gene_names = genome_pb2.genes.keys()
