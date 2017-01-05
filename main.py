@@ -2,7 +2,7 @@ import genomereader
 import align
 import dendrogram
 from matplotlib import pyplot as plt
-from sort_print import sort_print
+from sort_print import sort_print, calc_similar_percentage
 
 # read genomes
 genome_pb2 = genomereader.GenomeReader(
@@ -87,6 +87,11 @@ print(rem_jap_aminoacid_seq_pam)
 print(pb_jap_aminoacid_seq_pam)
 print(rem_pb_aminoacid_seq_pam)
 
+print("Results of percentages of similarities according to each gene in genome")
+gene_percentages = calc_similar_percentage([rem_pb_nucleotid_gene_distances, rem_jap_nucleotid_gene_distances, pb_jap_nucleotid_gene_distances], all_gene_names)
+print("rem_pb: " + str(gene_percentages[0][1]))
+print("rem_jap: " + str(gene_percentages[1][1]))
+print("pb_jap: " + str(gene_percentages[2][1]))
 
 dend = dendrogram.Dendrograms(1, 2)
 # 1row, 2 columns for 2 dendrograms
