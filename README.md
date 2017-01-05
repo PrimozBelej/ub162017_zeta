@@ -27,7 +27,7 @@ Visualization of differences between alignment of all genes between species.
 
 In the folowing section we present the experiments and their results. We test our implementation of gene alignment with different scoring matrices, with junk DNA and without etc. 
 
-#### Global alignment of exons with different scoring matrices
+#### Global alignment of exons 
 
 In the first experiment we perform global alignment on species pair by pair. For each two genes we extract exons and perform alignment on them. The sum of score is our metric to compare alignments of species pair by pair. After alignment using nucleotides we also experiment with aminoacid sequence. 
 
@@ -67,6 +67,18 @@ As we can see, some genes are appearing more than once (g13065, g5838, g10223). 
 
 Similar conclusion can be drawn here. Genes that has the best aligment are common in more than one pair. 
 
+#### Global alignment of exons with different scoring matrices
+
+The goal here was to discover if different scoring matrices produce same results ie. if alignment between remanei and japonica will still be the highest scored alignment. We ran the alignment with the folowing matrices: blosum62, pam250, pam30, and rao. The results for nucleotide sequences are avaliable in the table below.
+
+| Species pair | blosum62 | pam250 | pam30 | rao    |
+|--------------|----------|--------|-------|--------|
+| rem_jap      | 14655    | 13848  | 16267 | 114918 |
+| pb_jap       | 10082    | 9112   | 12533 | 104259 |
+| rem_pb       | 13630    | 12144  | 15967 | 117715 |
+
+From the obtained results we see that remanei and japonica still have the best alignment score, except when using rao scoring matrix, where remanei and brenneri are scored better. In all cases the lowest scored alignment is between brenneri and japonica. We can conclude that even though choosing appropriate scoring matrix is important it rarely affects the results to such an extent that the order of species pairs is different. 
+
 #### Global alignment if introns are included.
 
 In this experiment we perform global alignment on species pair by pair. For each two genes we take a whole sequence and perform alignment on them. The sum of score is our metric to compare alignments of species pair by pair. After alignment using nucleotides we also experiment with aminoacid sequence. 
@@ -79,8 +91,8 @@ We can see results are different as in the first experiment. Now remanei and bre
 
 | Species pair | Nucleotide | Amino-acid |
 |--------------|------------|------------|
-| rem_jap      | 14249     | -3584  |
-| pb_jap       | 13593      | -3812     |
-| rem_pb       | 20000      | -2548  |
+| rem_jap      | 14249      | -3584      |
+| pb_jap       | 13593      | -3812      |
+| rem_pb       | 20000      | -2548      |
 
 As in the first experiment, the scores obtained using amino acid sequences are significantly lower.
