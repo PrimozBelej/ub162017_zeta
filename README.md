@@ -17,7 +17,7 @@ Provides reading and parsing of the dataset. In addition to loading a whole geno
 
 #### alignment.py
 
-Accepts two strings and scores their alignment. Return score and alignment of strings. Local, global and multiple alignment are supported.  
+Accepts two strings and scores their alignment. Return score and alignment of strings. Local, global and multiple alignment are supported. Mutliple alignment is deprecated - it works only on short strings, in our case we have genes with more than 700 characters, which is computationaly unacceptable, so we did not use it in our project.
 
 #### dendrogram.py
 
@@ -44,6 +44,14 @@ As we can see better results were obtained using nucleotides (note that scores w
 | rem_pb       | 12144      | -3562      |
 
 As we see from table above, the scores obtained using amino acid sequences are significantly lower. 
+
+| Species pair | Nucleotide gene similarities (%)|
+|--------------|------------|
+| rem_jap      | 44.83      |
+| pb_jap       | 31.03      |
+| rem_pb       | 24.14      |
+
+From table above, we see which species pair is the most similar to each other, according to scores of each gene seperately. We see that rem_jap is the most similar pair.
 
 We also took a look at which genes have the highest and the lowest alignment score. The results are shown below, where 5 genes with lowest (first table) and highest score(second table) for each pair are presented with their name and alignment score.
 
