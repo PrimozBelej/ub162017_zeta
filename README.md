@@ -1,5 +1,4 @@
 # Evolution of genes - project C1
-### Motivation
 
 ### Goals
 
@@ -104,3 +103,6 @@ We can see results are different as in the first experiment. Now remanei and bre
 | rem_pb       | 20000      | -2548      |
 
 As in the first experiment, the scores obtained using amino acid sequences are significantly lower.
+
+### Conclusion
+From experiments performed on the dataset we can conclude that global alignment is largley dependent on the variables used, like included/excluded introns and different scoring matrices. The method is fast enough when aligning pairs, but our experiment with multiple alignment failed since the dataset was too large. 
