@@ -6,7 +6,7 @@ The goal of the project was to implement global alignment algorithm. We scored e
 
 ### Dataset
 
-The dataset consist of genome of 3 different nematodes (round worms) - japanica, brenneri and remanei. It is common for this group of nematodes that their genome contains a vast ammount of redundancy. This means that not whole genes are translated into proteins. Parts that end up in protein are called exons nad parts that do not are called introns. Part of genes given in dataset contains at least two exons. 
+The dataset consist of genome of 3 different nematodes (round worms) - japanica, brenneri and remanei. It is common for this group of nematodes that their genome contains a vast ammount of redundancy. This means that not whole genes are translated into proteins. Parts that end up in protein are called exons nad parts that do not are called introns. Part of genes given in dataset contains at least two exons. Compressed file of the dataset is accesbile on [this website](http://bubble.fri.uni-lj.si/zp/dsub/projects/chC_alignment.zip) [accesed in december 2016].
 
 ### Methods
 
