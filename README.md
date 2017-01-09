@@ -21,6 +21,7 @@ Accepts two strings and scores their alignment. Return score and alignment of st
 #### dendrogram.py
 
 Visualization of differences between alignment of all genes between species. 
+Distance: higher alignment score means lower distance, so we compute distance as (1 - ratio between score and highest score), where highest score is multiplied by 1.1 to avoid distance zero.
 
 ### Experiments and results
 
