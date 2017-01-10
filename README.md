@@ -105,5 +105,13 @@ We can see results are different as in the first experiment. Now remanei and bre
 
 As in the first experiment, the scores obtained using amino acid sequences are significantly lower.
 
+| Species pair | Nucleotide gene similarities (%)|
+|--------------|------------|
+| rem_jap      | 31.03      |
+| pb_jap       | 27.59      |
+| rem_pb       | 41.38      |
+
+From table above, we see which species pair is the most similar to each other, according to scores of each gene seperately (percentages of dendrograms, which give most similar results). We get different results, saying pair rem_pb is the most similar pair, unlike in first experiment, where rem_jap was the most similar.
+
 ### Conclusion
 From experiments performed on the dataset we can conclude that global alignment is largley dependent on the variables used, like included/excluded introns and different scoring matrices. The method is fast enough when aligning pairs, but our experiment with multiple alignment failed since the dataset was too large. 
